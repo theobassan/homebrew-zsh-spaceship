@@ -2,7 +2,7 @@
 
 function spaceship_aws_check() {
   local active_account
-  active_account=$(aws sts get-caller-identity &>/dev/null)
+  active_account=$(aws sts get-caller-identity 2>/dev/null)
 
   if [[ -n "$active_account" || -n "$AWS_SESSION_TOKEN" || -n "$AWS_ACCESS_KEY_ID" ]]; then
     echo true
@@ -22,21 +22,11 @@ function spaceship_gcloud_check() {
   fi
 }
 
-ZSH_SPACESHIP_FOLDER="${ZSH_SPACESHIP_FOLDER:-$(brew --prefix)/opt/spaceship}"
+SPACESHIP_OS_ICON_COLOR=39
 
-source "$ZSH_SPACESHIP_FOLDER/spaceship.zsh-theme"|| return
-
-CURRENT_SPACESHIP_PROMPT_DIR="${0:A:h}"
-source "$CURRENT_SPACESHIP_PROMPT_DIR/git/git-p10k.zsh" || return
-source "$CURRENT_SPACESHIP_PROMPT_DIR/os-icon/os-icon.zsh" || return
-
-SPACESHIP_AWS_SHOW="${SPACESHIP_AWS_SHOW=$(spaceship_aws_check)}"
-SPACESHIP_AWS_PREFIX=""
-SPACESHIP_AWS_SYMBOL="\uf0ef. "
- 
-SPACESHIP_GCLOUD_SHOW="${SPACESHIP_GCLOUD_SHOW=$(spaceship_gcloud_check)}"
-SPACESHIP_GCLOUD_PREFIX=""
-SPACESHIP_GCLOUD_SYMBOL="\uf1a0 "
+SPACESHIP_DIR_SHOW=true
+SPACESHIP_DIR_PREFIX=""
+SPACESHIP_DIR_COLOR=39
  
 SPACESHIP_NODE_PREFIX=""
 SPACESHIP_NODE_SYMBOL="\ued0d "
@@ -80,15 +70,24 @@ SPACESHIP_DOCKER_PREFIX=""
 SPACESHIP_DOCKER_SYMBOL="\uf21f "
 SPACESHIP_DOCKER_SYMBOL_COLOR="cyan"
 
-SPACESHIP_OS_ICON_COLOR=39
+SPACESHIP_AWS_SHOW="${SPACESHIP_AWS_SHOW:-$(spaceship_aws_check)}"
+SPACESHIP_AWS_PREFIX=""
+SPACESHIP_AWS_SYMBOL="\uf0ef. "
 
-SPACESHIP_DIR_SHOW=true
-SPACESHIP_DIR_PREFIX=""
-SPACESHIP_DIR_COLOR=39
+SPACESHIP_GCLOUD_SHOW="${SPACESHIP_GCLOUD_SHOW:-$(spaceship_gcloud_check)}"
+SPACESHIP_GCLOUD_PREFIX=""
+SPACESHIP_GCLOUD_SYMBOL="\uf1a0 "
 
 if [[ $TERM_PROGRAM == "WarpTerminal" ]]; then
     SPACESHIP_PROMPT_ASYNC=false
 fi
+
+ZSH_SPACESHIP_FOLDER="${ZSH_SPACESHIP_FOLDER:-$(brew --prefix)/opt/spaceship}"
+source "$ZSH_SPACESHIP_FOLDER/spaceship.zsh-theme"|| return
+
+CURRENT_SPACESHIP_PROMPT_DIR="${0:A:h}"
+source "$CURRENT_SPACESHIP_PROMPT_DIR/git/git-p10k.zsh" || return
+source "$CURRENT_SPACESHIP_PROMPT_DIR/os-icon/os-icon.zsh" || return
 
 SPACESHIP_PROMPT_ORDER=(
   os_icon
