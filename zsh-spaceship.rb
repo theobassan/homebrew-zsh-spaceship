@@ -19,13 +19,10 @@ class ZshSpaceship < Formula
 
   def install
     Dir.glob("**/*.zsh").each do |file|
-      # Create the directory structure under the prefix
-      target_dir = File.join(prefix, File.dirname(file))
-      mkdir_p target_dir
-      # Install the file into the corresponding directory
-      (target_dir).install file
+      target_dir = prefix/File.dirname(file)
+      target_dir.mkpath unless target_dir.exist?
+      target_dir.install file
     end
-    #(prefix).install "zsh-aliases.zsh", "zsh-autosuggestions.zsh", "zsh-syntax-highlighting.zsh", "zsh-completions.zsh", "zsh-z.zsh", "zsh-direnv.zsh", "zsh-mise.zsh", "zsh-spaceship-prompt.zsh", "zsh-spaceship.zsh"
   end
 
   def caveats
@@ -34,7 +31,7 @@ class ZshSpaceship < Formula
         source #{opt_prefix}/zsh_spaceship.zsh
     EOS
   end
-
+  
   test do
     Dir.glob("**/*.zsh").each do |file|
       assert_predicate prefix/file, :exist?, "Expected #{file} to be installed in #{prefix}"
