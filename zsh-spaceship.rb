@@ -16,7 +16,6 @@ class ZshSpaceship < Formula
   depends_on "bat"
   depends_on "tree"
   depends_on "fzf"
-  depends_on "google-cloud-sdk"
   depends_on "awscli"
 
   def install
@@ -31,6 +30,9 @@ class ZshSpaceship < Formula
     <<~EOS
       To use this script, source it in your .zshrc:
         source #{opt_prefix}/zsh_spaceship.zsh
+
+      Note: The `google-cloud-sdk` dependency must be installed manually as it is a cask:
+        brew install --cask google-cloud-sdk
     EOS
   end
   
