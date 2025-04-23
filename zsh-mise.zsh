@@ -2,9 +2,12 @@
 
 ZSH_SPACESHIP_MISE_FOLDER="${ZSH_SPACESHIP_MISE_FOLDER:-$(brew --prefix)/opt/spaceship}"
 
-#TODO DIR CONFIG
 eval "$(mise activate zsh)"
 eval "$(mise hook-env -s zsh)"
+
+for tool in node java golang dotnet python; do
+  eval "$(mise settings add idiomatic_version_file_enable_tools $tool)"
+done
 
 function use_mise_auto() {
   if command -v mise &> /dev/null; then
