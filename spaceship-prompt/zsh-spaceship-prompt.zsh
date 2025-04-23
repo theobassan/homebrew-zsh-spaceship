@@ -1,5 +1,13 @@
 #!/bin/zsh
 
+function spaceship_aws_check() {
+  [[ -n "$AWS_SESSION_TOKEN" || -n "$AWS_ACCESS_KEY_ID" ]]
+}
+
+function spaceship_gcloud_check() {
+  gcloud auth list --filter=status:ACTIVE --format="value(account)" &>/dev/null || [[ -n "$GOOGLE_APPLICATION_CREDENTIALS" ]]
+}
+
 ZSH_SPACESHIP_FOLDER="${ZSH_SPACESHIP_FOLDER:-$(brew --prefix)/opt/spaceship}"
 
 source "$ZSH_SPACESHIP_FOLDER/spaceship.zsh-theme"|| return
@@ -7,10 +15,12 @@ source "$ZSH_SPACESHIP_FOLDER/spaceship.zsh-theme"|| return
 CURRENT_SPACESHIP_PROMPT_DIR="${0:A:h}"
 source "$CURRENT_SPACESHIP_PROMPT_DIR/git/git-p10k.zsh" || return
 source "$CURRENT_SPACESHIP_PROMPT_DIR/os-icon/os-icon.zsh" || return
- 
+
+SPACESHIP_AWS_SHOW=$(spaceship_aws_check && echo true || echo false)
 SPACESHIP_AWS_PREFIX=""
 SPACESHIP_AWS_SYMBOL="\uf0ef. "
  
+SPACESHIP_GCLOUD_SHOW=$(spaceship_gcloud_check && echo true || echo false)
 SPACESHIP_GCLOUD_PREFIX=""
 SPACESHIP_GCLOUD_SYMBOL="\uf1a0 "
  
@@ -56,11 +66,11 @@ SPACESHIP_DOCKER_PREFIX=""
 SPACESHIP_DOCKER_SYMBOL="\uf21f "
 SPACESHIP_DOCKER_SYMBOL_COLOR="cyan"
 
+SPACESHIP_OS_ICON_COLOR=39
+
 SPACESHIP_DIR_SHOW=true
 SPACESHIP_DIR_PREFIX=""
 SPACESHIP_DIR_COLOR=39
-
-SPACESHIP_DIR_P10K_COLOR=39
 
 if [[ $TERM_PROGRAM == "WarpTerminal" ]]; then
     SPACESHIP_PROMPT_ASYNC=false
@@ -101,7 +111,3 @@ SPACESHIP_RPROMPT_ORDER=(
   ibmcloud
   time
 )
-
-if [[ $TERM_PROGRAM == "WarpTerminal" ]]; then
-    SPACESHIP_PROMPT_ASYNC=false
-fi
