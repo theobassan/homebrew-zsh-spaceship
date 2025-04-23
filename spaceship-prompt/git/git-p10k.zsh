@@ -4,7 +4,7 @@
 # Configuration
 # ------------------------------------------------------------------------------
 
-SPACESHIP_GIT_P10K_SHOW="${SPACESHIP_GIT_P10K_SHOW=true}"
+SPACESHIP_GIT_P10K_SHOW="${SPACESHIP_GIT_P10K_SHOW:-true}"
 CURRENT_SPACESHIP_GIT_P10K_DIR="${0:A:h}"
 
 # ------------------------------------------------------------------------------
