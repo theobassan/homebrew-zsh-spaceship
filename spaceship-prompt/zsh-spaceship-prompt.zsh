@@ -30,11 +30,11 @@ CURRENT_SPACESHIP_PROMPT_DIR="${0:A:h}"
 source "$CURRENT_SPACESHIP_PROMPT_DIR/git/git-p10k.zsh" || return
 source "$CURRENT_SPACESHIP_PROMPT_DIR/os-icon/os-icon.zsh" || return
 
-SPACESHIP_AWS_SHOW=$(spaceship_aws_check)
+SPACESHIP_AWS_SHOW="${SPACESHIP_AWS_SHOW=$(spaceship_aws_check)}"
 SPACESHIP_AWS_PREFIX=""
 SPACESHIP_AWS_SYMBOL="\uf0ef. "
  
-SPACESHIP_GCLOUD_SHOW=$(spaceship_gcloud_check)
+SPACESHIP_GCLOUD_SHOW="${SPACESHIP_GCLOUD_SHOW=$(spaceship_gcloud_check)}"
 SPACESHIP_GCLOUD_PREFIX=""
 SPACESHIP_GCLOUD_SYMBOL="\uf1a0 "
  
@@ -121,7 +121,7 @@ SPACESHIP_RPROMPT_ORDER=(
   #kubectl
   aws
   gcloud
-  azure
-  ibmcloud
+  #azure
+  #ibmcloud
   time
 )
