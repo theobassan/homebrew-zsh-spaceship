@@ -1,3 +1,3 @@
 #!/bin/zsh
 
-eval "$(direnv export zsh)"
+eval "$(direnv hook zsh)"
