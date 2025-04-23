@@ -1,7 +1,10 @@
 #!/bin/zsh
 
 function spaceship_aws_check() {
-  if [[ -n "$AWS_SESSION_TOKEN" || -n "$AWS_ACCESS_KEY_ID" ]]; then
+  local active_account
+  active_account=$(aws sts get-caller-identity &>/dev/null)
+
+  if [[ -n "$active_account" || -n "$AWS_SESSION_TOKEN" || -n "$AWS_ACCESS_KEY_ID" ]]; then
     echo true
   else
     echo false
