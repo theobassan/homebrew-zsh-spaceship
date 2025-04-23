@@ -16,7 +16,8 @@ class ZshSpaceship < Formula
   depends_on "bat"
   depends_on "tree"
   depends_on "fzf"
-  depends_on "gcloud"
+  depends_on "google-cloud-sdk"
+  depends_on "awscli"
 
   def install
     Dir.glob("**/*.zsh").each do |file|
