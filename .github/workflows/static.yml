@@ -12,5 +12,7 @@ jobs:
     with:
       publish: |
         {
-          "brew": true
+          "brew": {
+            "formula_file": "zsh-spaceship.rb"
+          }
         }
