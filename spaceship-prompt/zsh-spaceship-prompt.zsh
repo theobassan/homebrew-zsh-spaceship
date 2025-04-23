@@ -1,11 +1,22 @@
 #!/bin/zsh
 
 function spaceship_aws_check() {
-  [[ -n "$AWS_SESSION_TOKEN" || -n "$AWS_ACCESS_KEY_ID" ]]
+  if [[ -n "$AWS_SESSION_TOKEN" || -n "$AWS_ACCESS_KEY_ID" ]]; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 function spaceship_gcloud_check() {
-  gcloud auth list --filter=status:ACTIVE --format="value(account)" &>/dev/null || [[ -n "$GOOGLE_APPLICATION_CREDENTIALS" ]]
+  local active_account
+  active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
+  
+  if [[ -n "$active_account" || -n "$GOOGLE_APPLICATION_CREDENTIALS" ]]; then
+    echo true
+  else
+    echo false
+  fi
 }
 
 ZSH_SPACESHIP_FOLDER="${ZSH_SPACESHIP_FOLDER:-$(brew --prefix)/opt/spaceship}"
@@ -16,11 +27,11 @@ CURRENT_SPACESHIP_PROMPT_DIR="${0:A:h}"
 source "$CURRENT_SPACESHIP_PROMPT_DIR/git/git-p10k.zsh" || return
 source "$CURRENT_SPACESHIP_PROMPT_DIR/os-icon/os-icon.zsh" || return
 
-SPACESHIP_AWS_SHOW=$(spaceship_aws_check && echo true || echo false)
+SPACESHIP_AWS_SHOW=$(spaceship_aws_check)
 SPACESHIP_AWS_PREFIX=""
 SPACESHIP_AWS_SYMBOL="\uf0ef. "
  
-SPACESHIP_GCLOUD_SHOW=$(spaceship_gcloud_check && echo true || echo false)
+SPACESHIP_GCLOUD_SHOW=$(spaceship_gcloud_check)
 SPACESHIP_GCLOUD_PREFIX=""
 SPACESHIP_GCLOUD_SYMBOL="\uf1a0 "
  
