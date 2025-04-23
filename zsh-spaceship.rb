@@ -1,8 +1,8 @@
 class SpaceshipDirP10k < Formula
   desc "Spaceship Dir P10k"
   homepage "https://github.com/theobassan/zsh-spaceship"
-  url "https://github.com/theobassan/zsh-spaceship/releases/download/v0.1.1/v0.1.1-stable.tar.gz"
-  sha256 "6998bd95d1eea34e774be9e2aeed80f112c7c1f8413240e15e061a5c4170e0c8"
+  url "https://github.com/theobassan/zsh-spaceship/releases/download/v0.1.0/v0.1.0-stable.tar.gz"
+  sha256 "e0292b8efb0ac240d6f1208e0cf7c7dc1398cd961d400778686bf0e1c6e9630d"
   license "GPL-3.0-only"
 
   depends_on "spaceship"
