@@ -4,7 +4,7 @@ local promptDir="${0:A:h}"
 source "$promptDir/config.zsh" || return
 
 function spaceship_aws_check() {
-  if [[ "$ZSH_SPACESHIP_USE_AWS_CLI" == false ]]; then
+  if [[ "$ZSH_SPACESHIP_AWS_USE_CLI" == false ]]; then
     echo true
     return
   fi
@@ -13,7 +13,7 @@ function spaceship_aws_check() {
   mkdir -p "$tmp_dir"
 
   local cache_file="${tmp_dir}/spaceship_aws_status"
-  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt 3600 ]]; then
+  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
     cat "$cache_file"
     return
   fi
@@ -31,7 +31,7 @@ function spaceship_aws_check() {
 }
 
 function spaceship_gcloud_check() {
-  if [[ "$ZSH_SPACESHIP_USE_GCLOUD_CLI" == false ]]; then
+  if [[ "$ZSH_SPACESHIP_GCLOUD_USE_CLI" == false ]]; then
     echo true
     return
   fi
@@ -40,7 +40,7 @@ function spaceship_gcloud_check() {
   mkdir -p "$tmp_dir"
 
   local cache_file="${tmp_dir}/spaceship_gcloud_status"
-  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt 3600 ]]; then
+  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
     cat "$cache_file"
     return
   fi
