@@ -23,7 +23,7 @@ source "$rootDir/zsh-cursor.zsh" || return
 source "$rootDir/zsh-autosuggestions.zsh" || return
 source "$rootDir/zsh-syntax-highlighting.zsh" || return
 source "$rootDir/zsh-completions.zsh" || return
-source "$rootDir/zsh-z.zsh" || return
+source "$rootDir/zsh-zoxide.zsh" || return
 source "$rootDir/zsh-direnv.zsh" || return
 source "$rootDir/zsh-mise.zsh" || return
 source "$rootDir/aliases/zsh-aliases.zsh" || return

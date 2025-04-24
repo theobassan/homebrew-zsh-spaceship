@@ -9,7 +9,7 @@ class ZshSpaceship < Formula
   depends_on "zsh-autosuggestions"
   depends_on "zsh-syntax-highlighting"
   depends_on "zsh-completions"
-  depends_on "z"
+  depends_on "zoxide"
   depends_on "direnv"
   depends_on "mise"
   depends_on "fd"
