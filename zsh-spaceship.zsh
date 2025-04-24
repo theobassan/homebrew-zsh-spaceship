@@ -16,15 +16,15 @@ bindkey "^[[3~" delete-char
 #source "$HOME/.my-custom-zsh/kubectl.plugin.zsh"
 #source <(kubectl completion zsh)
 
-CURRENT_DIR="${0:A:h}"
-source "$CURRENT_DIR/zsh-fzf.zsh" || return
-source "$CURRENT_DIR/zsh-history.zsh" || return
-source "$CURRENT_DIR/zsh-cursor.zsh" || return
-source "$CURRENT_DIR/zsh-autosuggestions.zsh" || return
-source "$CURRENT_DIR/zsh-syntax-highlighting.zsh" || return
-source "$CURRENT_DIR/zsh-completions.zsh" || return
-source "$CURRENT_DIR/zsh-z.zsh" || return
-source "$CURRENT_DIR/zsh-direnv.zsh" || return
-source "$CURRENT_DIR/zsh-mise.zsh" || return
-source "$CURRENT_DIR/aliases/zsh-aliases.zsh" || return
-source "$CURRENT_DIR/spaceship-prompt/zsh-spaceship-prompt.zsh" || return
+local rootDir="${0:A:h}"
+source "$rootDir/zsh-fzf.zsh" || return
+source "$rootDir/zsh-history.zsh" || return
+source "$rootDir/zsh-cursor.zsh" || return
+source "$rootDir/zsh-autosuggestions.zsh" || return
+source "$rootDir/zsh-syntax-highlighting.zsh" || return
+source "$rootDir/zsh-completions.zsh" || return
+source "$rootDir/zsh-z.zsh" || return
+source "$rootDir/zsh-direnv.zsh" || return
+source "$rootDir/zsh-mise.zsh" || return
+source "$rootDir/aliases/zsh-aliases.zsh" || return
+source "$rootDir/spaceship-prompt/zsh-spaceship-prompt.zsh" || return
