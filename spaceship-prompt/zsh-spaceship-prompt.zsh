@@ -3,9 +3,9 @@
 local promptDir="${0:A:h}"
 source "$promptDir/config.zsh" || return
 
-function spaceship_aws_check() {
+function spaceship_aws_color() {
   if [[ "$ZSH_SPACESHIP_AWS_USE_CLI" == false ]]; then
-    echo true
+    echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR
     return
   fi
 
@@ -24,16 +24,16 @@ function spaceship_aws_check() {
   {
     local active_account=$(aws sts get-caller-identity 2>/dev/null)
     if [[ -n "$active_account" ]]; then
-      echo true | tee "$cache_file" 2>/dev/null
+      echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR | tee "$cache_file" 2>/dev/null
     else
-      echo false | tee "$cache_file" 2>/dev/null
+      echo $ZSH_SPACESHIP_CLOUD_DISCONNECTED_COLOR | tee "$cache_file" 2>/dev/null
     fi
   } &
 }
 
-function spaceship_gcloud_check() {
+function spaceship_gcloud_color() {
   if [[ "$ZSH_SPACESHIP_GCLOUD_USE_CLI" == false ]]; then
-    echo true
+    echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR
     return
   fi
   
@@ -52,9 +52,9 @@ function spaceship_gcloud_check() {
   {
     local active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
     if [[ -n "$active_account" ]]; then
-      echo true | tee "$cache_file" 2>/dev/null
+      echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR | tee "$cache_file" 2>/dev/null
     else
-      echo false | tee "$cache_file" 2>/dev/null
+      echo $ZSH_SPACESHIP_CLOUD_DISCONNECTED_COLOR | tee "$cache_file" 2>/dev/null
     fi
   } &
 }
@@ -118,14 +118,14 @@ SPACESHIP_DOCKER_COLOR=$ZSH_SPACESHIP_CONTAINER_COLOR
 SPACESHIP_AWS_ASYNC=true
 SPACESHIP_AWS_PREFIX=""
 SPACESHIP_AWS_SYMBOL=$ZSH_SPACESHIP_AWS_SYMBOL
-SPACESHIP_AWS_SHOW="${ZSH_SPACESHIP_AWS_SHOW=$(spaceship_aws_check)}"
-SPACESHIP_AWS_COLOR=$ZSH_SPACESHIP_CLOUD_COLOR
+SPACESHIP_AWS_SHOW=$ZSH_SPACESHIP_AWS_SHOW
+SPACESHIP_AWS_COLOR=$(spaceship_gcloud_color)
 
 SPACESHIP_GCLOUD_ASYNC=true
 SPACESHIP_GCLOUD_PREFIX=""
 SPACESHIP_GCLOUD_SYMBOL=$ZSH_SPACESHIP_GCLOUD_SYMBOL
-SPACESHIP_GCLOUD_SHOW="${ZSH_SPACESHIP_GCLOUD_SHOW=$(spaceship_gcloud_check)}"
-SPACESHIP_GCLOUD_COLOR=$ZSH_SPACESHIP_CLOUD_COLOR
+SPACESHIP_GCLOUD_SHOW=$ZSH_SPACESHIP_GCLOUD_SHOW
+SPACESHIP_GCLOUD_COLOR=$(spaceship_gcloud_color)
 
 if [[ $TERM_PROGRAM == "WarpTerminal" ]]; then
     SPACESHIP_PROMPT_ASYNC=false
