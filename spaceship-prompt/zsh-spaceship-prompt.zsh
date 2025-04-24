@@ -8,26 +8,27 @@ function spaceship_aws_check() {
     echo true
     return
   fi
-  
+
   local tmp_dir="${promptDir}/tmp"
   mkdir -p "$tmp_dir"
-
+  
   local cache_file="${tmp_dir}/spaceship_aws_status"
-  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
-    cat "$cache_file"
-    return
+
+  if [[ "$ZSH_SPACESHIP_CLOUD_CACHE" == true ]]; then
+    if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
+      cat "$cache_file"
+      return
+    fi
   fi
 
   {
     local active_account=$(aws sts get-caller-identity 2>/dev/null)
     if [[ -n "$active_account" ]]; then
-      echo true > "$cache_file"
+      echo true | tee "$cache_file" 2>/dev/null
     else
-      echo false > "$cache_file"
+      echo false | tee "$cache_file" 2>/dev/null
     fi
   } &
-
-  echo false
 }
 
 function spaceship_gcloud_check() {
@@ -40,21 +41,22 @@ function spaceship_gcloud_check() {
   mkdir -p "$tmp_dir"
 
   local cache_file="${tmp_dir}/spaceship_gcloud_status"
-  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
-    cat "$cache_file"
-    return
+
+  if [[ "$ZSH_SPACESHIP_CLOUD_CACHE" == true ]]; then
+    if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
+      cat "$cache_file"
+      return
+    fi
   fi
 
   {
     local active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
     if [[ -n "$active_account" ]]; then
-      echo true > "$cache_file"
+      echo true | tee "$cache_file" 2>/dev/null
     else
-      echo false > "$cache_file"
+      echo false | tee "$cache_file" 2>/dev/null
     fi
   } &
-
-  echo false
 }
 
 ZSH_SPACESHIP_OS_ICON_COLOR=$ZSH_SPACESHIP_LOCATION_COLOR
