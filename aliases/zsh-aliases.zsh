@@ -7,4 +7,5 @@ source "$aliasesDir/you-should-use.zsh" || return
 
 alias :q=exit
 alias ..='cd ..'
+alias -- -='cd -'
 alias gcz="npx git-cz"
