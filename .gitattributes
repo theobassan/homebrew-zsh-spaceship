@@ -1,0 +1,4 @@
+.github/workflows/publish.yml export-ignore
+.gitattributes export-ignore
+.gitignore export-ignore
+zsh-spaceship.rb export-ignore

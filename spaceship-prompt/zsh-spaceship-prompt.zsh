@@ -1,25 +1,36 @@
 #!/bin/zsh
 
-function spaceship_aws_check() {
-  local active_account
-  active_account=$(aws sts get-caller-identity 2>/dev/null)
+ZSH_SPACESHIP_USE_AWS_CLI="${ZSH_SPACESHIP_USE_AWS_CLI:-false}"
+ZSH_SPACESHIP_USE_GCLOUD_CLI="${ZSH_SPACESHIP_USE_GCLOUD_CLI:-false}"
 
-  if [[ -n "$active_account" || -n "$AWS_SESSION_TOKEN" || -n "$AWS_ACCESS_KEY_ID" ]]; then
+function spaceship_aws_check() {
+  if [[ "$ZSH_SPACESHIP_USE_AWS_CLI" == false ]]; then
     echo true
-  else
-    echo false
+    return
   fi
+
+  local active_account=$(aws sts get-caller-identity 2>/dev/null)
+  if [[ -n "$active_account" ]]; then
+    echo true
+    return
+  fi
+
+  echo false
 }
 
 function spaceship_gcloud_check() {
-  local active_account
-  active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
-  
-  if [[ -n "$active_account" || -n "$GOOGLE_APPLICATION_CREDENTIALS" ]]; then
+  if [[ "$ZSH_SPACESHIP_USE_GCLOUD_CLI" == false ]]; then
     echo true
-  else
-    echo false
+    return
   fi
+
+  local active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
+  if [[ -n "$active_account" ]]; then
+    echo true
+    return
+  fi
+
+  echo false
 }
 
 SPACESHIP_OS_ICON_COLOR=39
@@ -65,15 +76,18 @@ SPACESHIP_TIME_SHOW=true
 SPACESHIP_TIME_PREFIX=""
 SPACESHIP_TIME_COLOR="yellow"
 
+SPACESHIP_DOCKER_ASYNC=true
 SPACESHIP_DOCKER_SHOW=true
 SPACESHIP_DOCKER_PREFIX=""
 SPACESHIP_DOCKER_SYMBOL="\uf21f "
 SPACESHIP_DOCKER_SYMBOL_COLOR="cyan"
 
+SPACESHIP_AWS_ASYNC=true
 SPACESHIP_AWS_SHOW="${SPACESHIP_AWS_SHOW:-$(spaceship_aws_check)}"
 SPACESHIP_AWS_PREFIX=""
 SPACESHIP_AWS_SYMBOL="\uf0ef "
 
+SPACESHIP_GCLOUD_ASYNC=true
 SPACESHIP_GCLOUD_SHOW="${SPACESHIP_GCLOUD_SHOW:-$(spaceship_gcloud_check)}"
 SPACESHIP_GCLOUD_PREFIX=""
 SPACESHIP_GCLOUD_SYMBOL="\uf1a0 "
@@ -115,7 +129,7 @@ SPACESHIP_PROMPT_ORDER=(
  
 SPACESHIP_RPROMPT_ORDER=(
   exec_time
-  docker
+  #docker
   #docker_compose
   #kubectl
   aws
