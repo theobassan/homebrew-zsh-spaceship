@@ -8,8 +8,11 @@ function spaceship_aws_check() {
     echo true
     return
   fi
+  
+  local tmp_dir="${promptDir}/tmp"
+  mkdir -p "$tmp_dir"
 
-  local cache_file="${promptDir}/tmp/spaceship_aws_status"
+  local cache_file="${tmp_dir}/spaceship_aws_status"
   if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt 3600 ]]; then
     cat "$cache_file"
     return
@@ -32,8 +35,11 @@ function spaceship_gcloud_check() {
     echo true
     return
   fi
+  
+  local tmp_dir="${promptDir}/tmp"
+  mkdir -p "$tmp_dir"
 
-  local cache_file="${promptDir}/tmp/spaceship_gcloud_status"
+  local cache_file="${tmp_dir}/spaceship_gcloud_status"
   if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt 3600 ]]; then
     cat "$cache_file"
     return
