@@ -9,11 +9,20 @@ function spaceship_aws_check() {
     return
   fi
 
-  local active_account=$(aws sts get-caller-identity 2>/dev/null)
-  if [[ -n "$active_account" ]]; then
-    echo true
+  local cache_file="${promptDir}/tmp/spaceship_aws_status"
+  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt 3600 ]]; then
+    cat "$cache_file"
     return
   fi
+
+  {
+    local active_account=$(aws sts get-caller-identity 2>/dev/null)
+    if [[ -n "$active_account" ]]; then
+      echo true > "$cache_file"
+    else
+      echo false > "$cache_file"
+    fi
+  } &
 
   echo false
 }
@@ -24,11 +33,20 @@ function spaceship_gcloud_check() {
     return
   fi
 
-  local active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
-  if [[ -n "$active_account" ]]; then
-    echo true
+  local cache_file="${promptDir}/tmp/spaceship_gcloud_status"
+  if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt 3600 ]]; then
+    cat "$cache_file"
     return
   fi
+
+  {
+    local active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
+    if [[ -n "$active_account" ]]; then
+      echo true > "$cache_file"
+    else
+      echo false > "$cache_file"
+    fi
+  } &
 
   echo false
 }
