@@ -4,7 +4,7 @@
 # Configuration
 # ------------------------------------------------------------------------------
 
-ZSH_SPACESHIP_GIT_P10K_SHOW="${ZSH_SPACESHIP_GIT_P10K_SHOW:-true}"
+ZSH_SPACESHIP_GIT_P10K_SHOW="${ZSH_SPACESHIP_GIT_P10K_SHOW=true}"
 
 # ------------------------------------------------------------------------------
 # Dependencies

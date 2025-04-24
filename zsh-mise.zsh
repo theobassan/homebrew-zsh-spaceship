@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-ZSH_SPACESHIP_MISE_FOLDER="${ZSH_SPACESHIP_MISE_FOLDER:-$(brew --prefix)/opt/spaceship}"
+ZSH_SPACESHIP_MISE_FOLDER="${ZSH_SPACESHIP_MISE_FOLDER=$(brew --prefix)/opt/spaceship}"
 
 eval "$(mise activate zsh)"
 eval "$(mise hook-env -s zsh)"

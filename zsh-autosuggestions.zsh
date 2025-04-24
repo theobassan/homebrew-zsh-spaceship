@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-ZSH_SPACESHIP_ZSH_AUTOSUGGESTIONS_FOLDER="${ZSH_SPACESHIP_ZSH_AUTOSUGGESTIONS_FOLDER:-$(brew --prefix)/share/zsh-autosuggestions}"
+ZSH_SPACESHIP_ZSH_AUTOSUGGESTIONS_FOLDER="${ZSH_SPACESHIP_ZSH_AUTOSUGGESTIONS_FOLDER=$(brew --prefix)/share/zsh-autosuggestions}"
 
 source "$ZSH_SPACESHIP_ZSH_AUTOSUGGESTIONS_FOLDER/zsh-autosuggestions.zsh" || return
 
