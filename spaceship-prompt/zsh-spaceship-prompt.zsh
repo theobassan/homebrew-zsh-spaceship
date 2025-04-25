@@ -120,7 +120,7 @@ SPACESHIP_AWS_ASYNC=true
 SPACESHIP_AWS_PREFIX=""
 SPACESHIP_AWS_SYMBOL=$ZSH_SPACESHIP_AWS_SYMBOL
 SPACESHIP_AWS_SHOW=$ZSH_SPACESHIP_AWS_SHOW
-SPACESHIP_AWS_COLOR=$(spaceship_gcloud_color)
+SPACESHIP_AWS_COLOR=$(spaceship_aws_color)
 
 SPACESHIP_GCLOUD_ASYNC=true
 SPACESHIP_GCLOUD_PREFIX=""
@@ -138,6 +138,9 @@ source "$ZSH_SPACESHIP_FOLDER/spaceship.zsh-theme"|| return
 source "$promptDir/git/git-p10k.zsh" || return
 source "$promptDir/os-icon/os-icon.zsh" || return
 
+#TODO custom dir with lock in other place
+#TODO custom gcloud checking project to not show session, and use cli
+#TODO custom aws add use cli
 SPACESHIP_PROMPT_ORDER=(
   os_icon
   user
