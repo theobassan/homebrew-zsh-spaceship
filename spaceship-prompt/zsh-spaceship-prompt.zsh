@@ -66,7 +66,7 @@ source "$ZSH_SPACESHIP_FOLDER/spaceship.zsh-theme"|| return
 source "$promptDir/aws/aws-status.zsh" || return
 source "$promptDir/dir/dir-p10k.zsh" || return
 source "$promptDir/gcloud/gcloud-status.zsh" || return
-source "$promptDir/git/git-p10k.zsh" || return
+source "$promptDir/git/git.zsh" || return
 source "$promptDir/os-icon/os-icon.zsh" || return
 
 SPACESHIP_PROMPT_ORDER=(
@@ -83,7 +83,7 @@ SPACESHIP_PROMPT_ORDER=(
   package
   #ansible
   #terraform
-  git_p10k
+  git_bassan
   async
   line_sep
   battery
