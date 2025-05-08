@@ -3,68 +3,8 @@
 local promptDir="${0:A:h}"
 source "$promptDir/config.zsh" || return
 
-function spaceship_aws_color() {
-  if [[ "$ZSH_SPACESHIP_AWS_USE_CLI" == false ]]; then
-    echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR
-    return
-  fi
-
-  local tmp_dir="${promptDir}/tmp"
-  mkdir -p "$tmp_dir"
-  
-  local cache_file="${tmp_dir}/spaceship_aws_status"
-
-  if [[ "$ZSH_SPACESHIP_CLOUD_CACHE" == true ]]; then
-    if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
-      cat "$cache_file"
-      return
-    fi
-  fi
-
-  {
-    local active_account=$(aws sts get-caller-identity 2>/dev/null)
-    if [[ -n "$active_account" ]]; then
-      echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR | tee "$cache_file" 2>/dev/null
-    else
-      echo $ZSH_SPACESHIP_CLOUD_DISCONNECTED_COLOR | tee "$cache_file" 2>/dev/null
-    fi
-  } &
-}
-
-function spaceship_gcloud_color() {
-  if [[ "$ZSH_SPACESHIP_GCLOUD_USE_CLI" == false ]]; then
-    echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR
-    return
-  fi
-  
-  local tmp_dir="${promptDir}/tmp"
-  mkdir -p "$tmp_dir"
-
-  local cache_file="${tmp_dir}/spaceship_gcloud_status"
-
-  if [[ "$ZSH_SPACESHIP_CLOUD_CACHE" == true ]]; then
-    if [[ -f "$cache_file" && $(($(date +%s) - $(stat -f %m "$cache_file"))) -lt $ZSH_SPACESHIP_CLOUD_CACHE_TIMEOUT ]]; then
-      cat "$cache_file"
-      return
-    fi
-  fi
-
-  {
-    local active_account=$(gcloud auth list --filter=status:ACTIVE --format="value(account)" 2>/dev/null)
-    if [[ -n "$active_account" ]]; then
-      echo $ZSH_SPACESHIP_CLOUD_CONNECTED_COLOR | tee "$cache_file" 2>/dev/null
-    else
-      echo $ZSH_SPACESHIP_CLOUD_DISCONNECTED_COLOR | tee "$cache_file" 2>/dev/null
-    fi
-  } &
-}
-
-ZSH_SPACESHIP_OS_ICON_COLOR=$ZSH_SPACESHIP_LOCATION_COLOR
-
-SPACESHIP_DIR_PREFIX=""
-SPACESHIP_DIR_LOCK_SYMBOL=$ZSH_SPACESHIP_DIR_LOCK_SYMBOL
-SPACESHIP_DIR_SHOW=$ZSH_SPACESHIP_DIR_SHOW
-SPACESHIP_DIR_COLOR=$ZSH_SPACESHIP_LOCATION_COLOR
+#SPACESHIP_OS_ICON_COLOR=$ZSH_SPACESHIP_LOCATION_COLOR
+#SPACESHIP_DIR_COLOR=$ZSH_SPACESHIP_LOCATION_COLOR
  
 SPACESHIP_NODE_PREFIX=""
 SPACESHIP_NODE_SYMBOL=$ZSH_SPACESHIP_NODE_SYMBOL
@@ -116,18 +56,6 @@ SPACESHIP_DOCKER_SYMBOL=$ZSH_SPACESHIP_DOCKER_SYMBOL
 SPACESHIP_DOCKER_SHOW=$ZSH_SPACESHIP_DOCKER_SHOW
 SPACESHIP_DOCKER_COLOR=$ZSH_SPACESHIP_CONTAINER_COLOR
 
-SPACESHIP_AWS_ASYNC=true
-SPACESHIP_AWS_PREFIX=""
-SPACESHIP_AWS_SYMBOL=$ZSH_SPACESHIP_AWS_SYMBOL
-SPACESHIP_AWS_SHOW=$ZSH_SPACESHIP_AWS_SHOW
-SPACESHIP_AWS_COLOR=$(spaceship_aws_color)
-
-SPACESHIP_GCLOUD_ASYNC=true
-SPACESHIP_GCLOUD_PREFIX=""
-SPACESHIP_GCLOUD_SYMBOL=$ZSH_SPACESHIP_GCLOUD_SYMBOL
-SPACESHIP_GCLOUD_SHOW=$ZSH_SPACESHIP_GCLOUD_SHOW
-SPACESHIP_GCLOUD_COLOR=$(spaceship_gcloud_color)
-
 if [[ $TERM_PROGRAM == "WarpTerminal" ]]; then
     SPACESHIP_PROMPT_ASYNC=false
 fi
@@ -135,17 +63,17 @@ fi
 ZSH_SPACESHIP_FOLDER="${ZSH_SPACESHIP_FOLDER=$(brew --prefix)/opt/spaceship}"
 source "$ZSH_SPACESHIP_FOLDER/spaceship.zsh-theme"|| return
 
+source "$promptDir/aws/aws-status.zsh" || return
+source "$promptDir/dir/dir-p10k.zsh" || return
+source "$promptDir/gcloud/gcloud-status.zsh" || return
 source "$promptDir/git/git-p10k.zsh" || return
 source "$promptDir/os-icon/os-icon.zsh" || return
 
-#TODO custom dir with lock in other place
-#TODO custom gcloud checking project to not show session, and use cli
-#TODO custom aws add use cli
 SPACESHIP_PROMPT_ORDER=(
   os_icon
   user
   host
-  dir
+  dir_p10k
   node
   java
   golang
@@ -170,8 +98,8 @@ SPACESHIP_RPROMPT_ORDER=(
   docker
   #docker_compose
   #kubectl
-  aws
-  gcloud
+  aws_status
+  gcloud_status
   #azure
   #ibmcloud
   time

@@ -9,3 +9,4 @@ alias :q=exit
 alias ..='cd ..'
 alias -- -='cd -'
 alias gcz="npx git-cz"
+alias code='open -a "Visual Studio Code"'

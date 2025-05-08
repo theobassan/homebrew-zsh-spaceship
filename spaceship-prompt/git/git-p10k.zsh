@@ -4,7 +4,8 @@
 # Configuration
 # ------------------------------------------------------------------------------
 
-ZSH_SPACESHIP_GIT_P10K_SHOW="${ZSH_SPACESHIP_GIT_P10K_SHOW=true}"
+SPACESHIP_GIT_P10K_SHOW="${SPACESHIP_GIT_P10K_SHOW=true}"
+SPACESHIP_GIT_P10K_ASYNC="${SPACESHIP_GIT_P10K_ASYNC=true}"
 
 # ------------------------------------------------------------------------------
 # Dependencies
@@ -20,9 +21,7 @@ spaceship::precompile "$gitSessionDir/git-status-p10k.zsh"
 
 # Show both git branch and git status:
 spaceship_git_p10k() {
-  [[ $ZSH_SPACESHIP_GIT_P10K_SHOW == false ]] && return
-
-  spaceship::is_git || return
+  [[ $SPACESHIP_GIT_P10K_SHOW == false ]] && return
 
   spaceship::core::refresh_section --sync git_status_p10k
 

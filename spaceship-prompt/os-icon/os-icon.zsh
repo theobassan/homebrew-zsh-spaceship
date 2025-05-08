@@ -4,22 +4,22 @@
 # Configuration
 # ------------------------------------------------------------------------------
 
-ZSH_SPACESHIP_OS_ICON_SHOW_OS_ICON="${ZSH_SPACESHIP_OS_ICON_SHOW_OS_ICON=true}"
-ZSH_SPACESHIP_OS_ICON_COLOR="${ZSH_SPACESHIP_OS_ICON_COLOR=39}"
+SPACESHIP_OS_ICON_SHOW_OS_ICON="${SPACESHIP_OS_ICON_SHOW_OS_ICON=true}"
+SPACESHIP_OS_ICON_COLOR="${SPACESHIP_OS_ICON_COLOR=39}"
 
-ZSH_SPACESHIP_OS_ICON_SUNOS_SYMBOL="${ZSH_SPACESHIP_OS_ICON_SUNOS_SYMBOL=\uf185}"
-ZSH_SPACESHIP_OS_ICON_APPLE_SYMBOL="${ZSH_SPACESHIP_OS_ICON_APPLE_SYMBOL=\uf179}"
-ZSH_SPACESHIP_OS_ICON_WINDOWS_SYMBOL="${ZSH_SPACESHIP_OS_ICON_WINDOWS_SYMBOL=\uf17a}"
-ZSH_SPACESHIP_OS_ICON_FREEBSD_SYMBOL="${ZSH_SPACESHIP_OS_ICON_FREEBSD_SYMBOL=\uf30c}"
-ZSH_SPACESHIP_OS_ICON_LINUX_SYMBOL="${ZSH_SPACESHIP_OS_ICON_LINUX_SYMBOL=\uebc6}"
-ZSH_SPACESHIP_OS_ICON_UNKNOWN_SYMBOL="${ZSH_SPACESHIP_OS_ICON_UNKNOWN_SYMBOL=\uebc3}"
+SPACESHIP_OS_ICON_SUNOS_SYMBOL="${SPACESHIP_OS_ICON_SUNOS_SYMBOL=\uf185}"
+SPACESHIP_OS_ICON_APPLE_SYMBOL="${SPACESHIP_OS_ICON_APPLE_SYMBOL=\uf179}"
+SPACESHIP_OS_ICON_WINDOWS_SYMBOL="${SPACESHIP_OS_ICON_WINDOWS_SYMBOL=\uf17a}"
+SPACESHIP_OS_ICON_FREEBSD_SYMBOL="${SPACESHIP_OS_ICON_FREEBSD_SYMBOL=\uf30c}"
+SPACESHIP_OS_ICON_LINUX_SYMBOL="${SPACESHIP_OS_ICON_LINUX_SYMBOL=\uebc6}"
+SPACESHIP_OS_ICON_UNKNOWN_SYMBOL="${SPACESHIP_OS_ICON_UNKNOWN_SYMBOL=\uebc3}"
 
 # ------------------------------------------------------------------------------
 # Section
 # ------------------------------------------------------------------------------
 
 spaceship_os_icon() {
-  [[ $ZSH_SPACESHIP_OS_ICON_SHOW_OS_ICON == false ]] && return
+  [[ $SPACESHIP_OS_ICON_SHOW_OS_ICON == false ]] && return
 
   local os_icon
   local os_name
@@ -36,16 +36,16 @@ spaceship_os_icon() {
     os_icon=""
   else
     case $os_name in
-      SunOS)                      os_icon=$ZSH_SPACESHIP_OS_ICON_SUNOS_SYMBOL;;
-      Darwin)                     os_icon=$ZSH_SPACESHIP_OS_ICON_APPLE_SYMBOL;;
-      CYGWIN*|MINGW*|MSYS*)       os_icon=$ZSH_SPACESHIP_OS_ICON_WINDOWS_SYMBOL;;
-      FreeBSD|OpenBSD|DragonFly)  os_icon=$ZSH_SPACESHIP_OS_ICON_FREEBSD_SYMBOL;;
-      Linux)                      os_icon=$ZSH_SPACESHIP_OS_ICON_LINUX_SYMBOL;;
-      *)                          os_icon=$ZSH_SPACESHIP_OS_ICON_UNKNOWN_SYMBOL;;
+      SunOS)                      os_icon=$SPACESHIP_OS_ICON_SUNOS_SYMBOL;;
+      Darwin)                     os_icon=$SPACESHIP_OS_ICON_APPLE_SYMBOL;;
+      CYGWIN*|MINGW*|MSYS*)       os_icon=$SPACESHIP_OS_ICON_WINDOWS_SYMBOL;;
+      FreeBSD|OpenBSD|DragonFly)  os_icon=$SPACESHIP_OS_ICON_FREEBSD_SYMBOL;;
+      Linux)                      os_icon=$SPACESHIP_OS_ICON_LINUX_SYMBOL;;
+      *)                          os_icon=$SPACESHIP_OS_ICON_UNKNOWN_SYMBOL;;
     esac
   fi
 
   spaceship::section \
-    --color "$ZSH_SPACESHIP_OS_ICON_COLOR" \
+    --color "$SPACESHIP_OS_ICON_COLOR" \
     "$os_icon "
 }
