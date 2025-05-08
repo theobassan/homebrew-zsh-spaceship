@@ -117,6 +117,7 @@ spaceship_git_status_p10k() {
     fi
   fi
 
+  #TODO conflicting with commits ahead/behind
   # --- Ahead/Behind Fork Status ---
   #local num_push_ahead=0 num_push_behind=0
   #if command git rev-parse --verify --quiet HEAD@{push} >/dev/null 2>&1; then
@@ -142,6 +143,7 @@ spaceship_git_status_p10k() {
   #  git_status+=" ${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_BEHIND_SYMBOL}${num_push_behind}"
   #fi
 
+  #TODO behind is not working
   # --- Ahead/Behind Status ---
   local num_ahead=0 num_behind=0 # Initialize to 0
   # Extract counts using parameter expansion for efficiency
