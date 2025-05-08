@@ -118,29 +118,29 @@ spaceship_git_status_p10k() {
   fi
 
   # --- Ahead/Behind Fork Status ---
-  local num_push_ahead=0 num_push_behind=0
-  if command git rev-parse --verify --quiet HEAD@{push} >/dev/null 2>&1; then
-    local counts
-    # Get ahead/behind counts relative to @{push}
-    counts=$(command git rev-list --count --left-right HEAD...HEAD@{push} 2>/dev/null)
-    if [[ -n "$counts" ]]; then
-      local ahead_count behind_count
-      # Use read to split the output directly into variables
-      read ahead_count behind_count <<< "$counts"
-      num_push_ahead=$((ahead_count))
-      num_push_behind=$((behind_count))
-    fi
-  fi
+  #local num_push_ahead=0 num_push_behind=0
+  #if command git rev-parse --verify --quiet HEAD@{push} >/dev/null 2>&1; then
+  #  local counts
+  #  # Get ahead/behind counts relative to @{push}
+  #  counts=$(command git rev-list --count --left-right HEAD...HEAD@{push} 2>/dev/null)
+  #  if [[ -n "$counts" ]]; then
+  #    local ahead_count behind_count
+  #    # Use read to split the output directly into variables
+  #    read ahead_count behind_count <<< "$counts"
+  #    num_push_ahead=$((ahead_count))
+  #    num_push_behind=$((behind_count))
+  #  fi
+  #fi
 
-  if (( num_push_ahead > 0 && num_push_behind > 0 )); then
-    # Add diverged symbol (optional)
-    # git_status+=" ${SPACESHIP_GIT_STATUS_DIVERGED_SYMBOL}"
-    git_status+=" ${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_AHEAD_SYMBOL}${num_push_ahead}${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_BEHIND_SYMBOL}${num_push_behind}"
-  elif (( num_push_ahead > 0 )); then
-    git_status+=" ${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_AHEAD_SYMBOL}${num_push_ahead}"
-  elif (( num_push_behind > 0 ));  then
-    git_status+=" ${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_BEHIND_SYMBOL}${num_push_behind}"
-  fi
+  #if (( num_push_ahead > 0 && num_push_behind > 0 )); then
+  #  # Add diverged symbol (optional)
+  #  # git_status+=" ${SPACESHIP_GIT_STATUS_DIVERGED_SYMBOL}"
+  #  git_status+=" ${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_AHEAD_SYMBOL}${num_push_ahead}${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_BEHIND_SYMBOL}${num_push_behind}"
+  #elif (( num_push_ahead > 0 )); then
+  #  git_status+=" ${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_AHEAD_SYMBOL}${num_push_ahead}"
+  #elif (( num_push_behind > 0 ));  then
+  #  git_status+=" ${SPACESHIP_GIT_STATUS_P10K_PUSH_COMMITS_BEHIND_SYMBOL}${num_push_behind}"
+  #fi
 
   # --- Ahead/Behind Status ---
   local num_ahead=0 num_behind=0 # Initialize to 0
