@@ -1,8 +1,8 @@
 class ZshSpaceship < Formula
   desc "ZSH Spaceship"
   homepage "https://github.com/theobassan/zsh-spaceship"
-  url "https://github.com/theobassan/homebrew-zsh-spaceship/releases/download/v1.3.1/v1.3.1-stable.tar.gz"
-  sha256 "1307e7a7f19c0cbe03fd150ebc32a6884412253460943572d736de07cf226ed4"
+  url "https://github.com/theobassan/homebrew-zsh-spaceship/releases/download/v1.3.2/v1.3.2-stable.tar.gz"
+  sha256 "d220aff34870337fd130e51da96a0736d78d8f4fe11472969863707b6e25f9ed"
   license "GPL-3.0-only"
 
   depends_on "spaceship"
