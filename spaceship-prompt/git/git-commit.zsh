@@ -13,6 +13,7 @@ SPACESHIP_GIT_COMMIT_BASSAN_PUSH_COMMITS_BEHIND_SYMBOL="${SPACESHIP_GIT_COMMIT_B
 SPACESHIP_GIT_COMMIT_BASSAN_PUSH_COMMITS_AHEAD_SYMBOL="${SPACESHIP_GIT_COMMIT_BASSAN_PUSH_COMMITS_AHEAD_SYMBOL=⇢}"
 
 SPACESHIP_GIT_COMMIT_BASSAN_CLEAN_COLOR="${SPACESHIP_GIT_BASSAN_CLEAN_COLOR}"
+SPACESHIP_GIT_COMMIT_BASSAN_MODIFIED_COLOR="${SPACESHIP_GIT_BASSAN_MODIFIED_COLOR}"
 
 # ------------------------------------------------------------------------------
 # Section
@@ -70,6 +71,14 @@ spaceship_git_commit_bassan() {
     num_behind=$((behind_str)) # Ensure arithmetic evaluation
   fi
 
+  local latest_commit_summary
+  latest_commit_summary=$(command git log -1 --pretty=%s 2>/dev/null)
+  # The pattern ensures "wip" or "WIP" is matched as a whole word.
+  if [[ -n "$latest_commit_summary" && "$latest_commit_summary" == (|*[^[:alnum:]])(wip|WIP)(|[^[:alnum:]]*) ]]; then
+    git_commit+=" ${SPACESHIP_GIT_COMMIT_BASSAN_MODIFIED_COLOR}wip"
+  fi
+  git_commit+="${SPACESHIP_GIT_BRANCH_BASSAN_CLEAN_COLOR}"
+
   # Use arithmetic comparison (( ... > 0 ))
   if (( num_ahead > 0 && num_behind > 0 )); then
     # Add diverged symbol if you have one defined
@@ -84,6 +93,6 @@ spaceship_git_commit_bassan() {
   # --- Final Output ---
   if [[ -n $git_commit ]]; then
     spaceship::section \
-      "${SPACESHIP_GIT_BRANCH_BASSAN_CLEAN_COLOR}$git_commit"
+      "$git_commit"
   fi
 }
